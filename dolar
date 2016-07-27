@@ -1,0 +1,33 @@
+#!/bin/bash
+
+# +-------------------------------------------------------------------------+
+# | Copyright (C) 2016 Ezequiel M. Cardinali (ezq@fedoraproject.org)        |
+# |                                                                         |
+# | This program is free software; you can redistribute it and/or           |
+# | modify it under the terms of the GNU General Public License             |
+# | as published by the Free Software Foundation; either version 3          |
+# | of the License, or (at your option) any later version.                  |
+# |                                                                         |
+# | This program is distributed in the hope that it will be useful,         |
+# | but WITHOUT ANY WARRANTY; without even the implied warranty of          |
+# | MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the           |
+# | GNU General Public License for more details.                            |
+# +-------------------------------------------------------------------------+
+# | http://cardinali.org/                                                   |
+# +-------------------------------------------------------------------------+
+
+
+ROJO="\033[1;31m"
+VERDE="\033[1;32m"
+AMARILLO="\033[1;33m"
+NORMAL="\033[0;39m"
+
+DOLAR=$(curl -s http://ws.geeklab.com.ar/dolar/get-dolar-json.php 2>/dev/null)
+PRECIO=($(echo "${DOLAR}" | grep -o '[0-9]*\.[0-9]*'))
+if ! [ -z ${1} ]; then
+	PRECIO[0]=${1}
+fi
+
+echo -e "${ROJO}-----------------${NORMAL}"
+echo -e "${VERDE} Oficial: ${AMARILLO}${PRECIO[0]}${NORMAL}"
+echo -e "${ROJO}-----------------${NORMAL}"
